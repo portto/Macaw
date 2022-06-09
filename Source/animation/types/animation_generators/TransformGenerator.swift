@@ -39,39 +39,8 @@ func addTransformAnimation(_ animation: BasicAnimation, _ context: AnimationCont
         animation.onProgressUpdate?(t)
     }
 
-    generatedAnimation.completion = { finished in
-
-        if animation.paused {
-            animation.pausedProgress += animation.progress
-            node.placeVar.value = transformAnimation.getVFunc()(animation.pausedProgress)
-        } else if animation.manualStop {
-            animation.pausedProgress = 0.0
-            animation.progress = 0.0
-            node.placeVar.value = transformAnimation.getVFunc()(0.0)
-        } else if finished {
-            animation.pausedProgress = 0.0
-            animation.progress = 1.0
-            node.placeVar.value = transformAnimation.getVFunc()(1.0)
-        }
-
-        CATransaction.begin()
-        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-//        renderer.layer?.animationLayer.transform = CATransform3DMakeAffineTransform(node.place.toCG())
-        CATransaction.commit()
-
-        if !animation.paused {
-            animation.removeFunc?()
-        }
-
-        renderer.freeLayer()
-
-        if !animation.cycled &&
-            !animation.manualStop &&
-            !animation.paused {
-            animation.completion?()
-        }
-
-        completion()
+    generatedAnimation.completion = { _ in
+        // remove for now, cause we don't need animation right now.
     }
 
     let animationId = animation.ID

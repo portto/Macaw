@@ -19,19 +19,6 @@ class GroupRenderer: NodeRenderer {
         updateRenderers()
     }
 
-    deinit {
-        dispose()
-    }
-
-    override func doAddObservers() {
-        super.doAddObservers()
-
-        group.contentsVar.onChange { [weak self] _ in
-            self?.updateRenderers()
-        }
-        observe(group.contentsVar)
-    }
-
     override func freeCachedAbsPlace() {
         for renderer in renderers {
             renderer.freeCachedAbsPlace()
@@ -40,9 +27,7 @@ class GroupRenderer: NodeRenderer {
 
     override func doRender(in context: CGContext, force: Bool, opacity: Double, coloringMode: ColoringMode = .rgb) {
         renderers.forEach { renderer in
-            if !renderer.isAnimating() {
-                renderer.render(in: context, force: force, opacity: opacity, coloringMode: coloringMode)
-            }
+            renderer.render(in: context, force: force, opacity: opacity, coloringMode: coloringMode)
         }
     }
 
@@ -53,12 +38,6 @@ class GroupRenderer: NodeRenderer {
             }
         }
         return .none
-    }
-
-    override func dispose() {
-        super.dispose()
-        renderers.forEach { renderer in renderer.dispose() }
-        renderers.removeAll()
     }
 
     private func updateRenderers() {

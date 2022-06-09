@@ -143,16 +143,10 @@ class AnimationUtils {
         var uncachedParentsPlace = Transform.identity
         while parent != nil {
             if let parent = parent {
-                if parent.layer != nil {
-                    break
-                }
                 uncachedParentsPlace = uncachedParentsPlace.concat(with: parent.node.place)
             }
             parent = parent?.parentRenderer
         }
-//        if let viewPlace = renderer.view?.place {
-//            uncachedParentsPlace = uncachedParentsPlace.concat(with: viewPlace)
-//        }
         return uncachedParentsPlace
     }
 }
@@ -165,54 +159,5 @@ extension Node {
 
     func needsLayer() -> Bool {
         return !animations.filter { $0.state() == AnimationState.running || $0.state() == AnimationState.initial }.isEmpty
-    }
-}
-
-extension NodeRenderer {
-
-    func isAnimating() -> Bool {
-        return false
-//        return layer != nil
-    }
-
-    func freeLayer() {
-
-//        let nodeRenderer = self
-//        guard let layer = nodeRenderer.layer, !node.needsLayer() else {
-//            return
-//        }
-//        nodeRenderer.layer = nil
-
-        // find first parent with cached layer
-//        var parent: NodeRenderer? = nodeRenderer.parentRenderer
-//        var parentCachedLayer: CALayer? = nodeRenderer.sceneLayer
-//        while parent != nil {
-//            if let parent = parent, let cached = parent.layer {
-//                parentCachedLayer = cached.animationLayer
-//                break
-//            }
-//            parent = parent?.parentRenderer
-//        }
-
-        // move children to closest parent layer
-//        for child in nodeRenderer.getAllChildrenRecursive() {
-//            if let cachedChildLayer = child.layer, let parentCachedLayer = parentCachedLayer {
-//                layer.animationLayer.sublayers?.forEach { childLayer in
-//                    if childLayer === cachedChildLayer.rootLayer {
-//                        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-//                        childLayer.removeFromSuperlayer()
-//                        childLayer.transform = CATransform3DMakeAffineTransform(AnimationUtils.uncachedParentsPlace(child).toCG())
-//                        parentCachedLayer.addSublayer(childLayer)
-//                        childLayer.setNeedsDisplay()
-//                        CATransaction.commit()
-//                    }
-//                }
-//            }
-//        }
-//
-//        layer.animationLayer.removeFromSuperlayer()
-//        layer.rootLayer.removeFromSuperlayer()
-//        parentCachedLayer?.setNeedsDisplay()
-//        sceneLayer?.setNeedsDisplay()
     }
 }

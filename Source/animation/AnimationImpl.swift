@@ -103,7 +103,6 @@ class BasicAnimation: Animation {
 
         removeFunc?()
         node?.animations.removeAll { $0 === self }
-        nodeRenderer?.freeLayer()
     }
 
     override open func pause() {
@@ -116,7 +115,6 @@ class BasicAnimation: Animation {
 
         removeFunc?()
         node?.animations.removeAll { $0 === self }
-        nodeRenderer?.freeLayer()
     }
 
     override func state() -> AnimationState {

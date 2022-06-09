@@ -15,20 +15,8 @@ class ShapeRenderer: NodeRenderer {
         super.init(size: size, parentRenderer: parentRenderer)
     }
 
-    deinit {
-        dispose()
-    }
-
     override var node: Node {
         return shape
-    }
-
-    override func doAddObservers() {
-        super.doAddObservers()
-
-        observe(shape.formVar)
-        observe(shape.fillVar)
-        observe(shape.strokeVar)
     }
 
     override func doRender(in context: CGContext, force: Bool, opacity: Double, coloringMode: ColoringMode = .rgb) {

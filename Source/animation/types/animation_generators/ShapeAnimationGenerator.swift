@@ -51,42 +51,8 @@ func addShapeAnimation(_ animation: BasicAnimation, _ context: AnimationContext,
         animation.onProgressUpdate?(t)
     }
 
-    generatedAnimation.completion = { finished in
-
-        animation.progress = animation.manualStop ? 0.0 : 1.0
-
-        if !animation.autoreverses && finished {
-            if fromShape.form != toShape.form {
-                shape.form = toShape.form
-            }
-            if fromShape.stroke != toShape.stroke {
-                shape.stroke = toShape.stroke
-            }
-            if fromShape.fill != toShape.fill {
-                shape.fill = toShape.fill
-            }
-        }
-
-        if !finished {
-            animation.progress = 0.0
-            if fromShape.form != toShape.form {
-                shape.form = toShape.form
-            }
-            if fromShape.stroke != toShape.stroke {
-                shape.stroke = toShape.stroke
-            }
-            if fromShape.fill != toShape.fill {
-                shape.fill = toShape.fill
-            }
-        }
-
-        renderer.freeLayer()
-
-        if !animation.cycled && !animation.manualStop {
-            animation.completion?()
-        }
-
-        completion()
+    generatedAnimation.completion = { _ in
+        // remove for now, cause we don't need animation right now.
     }
 
     layer.path = fromShape.form.toCGPath()

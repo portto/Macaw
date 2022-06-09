@@ -22,21 +22,6 @@ class ImageRenderer: NodeRenderer {
         super.init(size: size, parentRenderer: parentRenderer)
     }
 
-    deinit {
-        dispose()
-    }
-
-    override func doAddObservers() {
-        super.doAddObservers()
-
-        observe(image.srcVar)
-        observe(image.xAlignVar)
-        observe(image.yAlignVar)
-        observe(image.aspectRatioVar)
-        observe(image.wVar)
-        observe(image.hVar)
-    }
-
     override func doRender(in context: CGContext, force: Bool, opacity: Double, coloringMode: ColoringMode = .rgb) {
 
         var mImage: MImage?

@@ -32,39 +32,8 @@ func addOpacityAnimation(_ animation: BasicAnimation, _ context: AnimationContex
         animation.onProgressUpdate?(t)
     }
 
-    generatedAnimation.completion = { finished in
-
-        if animation.paused {
-            animation.pausedProgress += animation.progress
-            node.opacityVar.value = opacityAnimation.getVFunc()(animation.pausedProgress)
-        } else if animation.manualStop {
-            animation.pausedProgress = 0.0
-            animation.progress = 0.0
-            node.opacityVar.value = opacityAnimation.getVFunc()(0.0)
-        } else if finished {
-            animation.pausedProgress = 0.0
-            animation.progress = 1.0
-            node.opacityVar.value = opacityAnimation.getVFunc()(1.0)
-        }
-
-        CATransaction.begin()
-        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-//        renderer.layer?.animationLayer.opacity = Float(node.opacity)
-        CATransaction.commit()
-
-        if !animation.paused {
-            animation.removeFunc?()
-        }
-
-        renderer.freeLayer()
-
-        if  !animation.cycled &&
-                !animation.manualStop &&
-                !animation.paused {
-            animation.completion?()
-        }
-
-        completion()
+    generatedAnimation.completion = { _ in
+        // remove for now, cause we don't need animation right now.
     }
 
     let layer = AnimationUtils.layerForNodeRenderer(renderer, animation: animation)

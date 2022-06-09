@@ -18,22 +18,6 @@ class TextRenderer: NodeRenderer {
         super.init(size: size, parentRenderer: parentRenderer)
     }
 
-    deinit {
-        dispose()
-    }
-
-    override func doAddObservers() {
-        super.doAddObservers()
-
-        observe(text.textVar)
-        observe(text.fontVar)
-        observe(text.fillVar)
-        observe(text.strokeVar)
-        observe(text.alignVar)
-        observe(text.baselineVar)
-        observe(text.kerningVar)
-    }
-
     override func doRender(in context: CGContext, force: Bool, opacity: Double, coloringMode: ColoringMode = .rgb) {
 
         let message = text.text

@@ -48,24 +48,8 @@ func addMorphingAnimation(_ animation: BasicAnimation, _ context: AnimationConte
         animation.onProgressUpdate?(t)
     }
 
-    generatedAnimation.completion = { finished in
-
-        if animation.manualStop {
-            animation.progress = 0.0
-            shape.form = morphingAnimation.getVFunc()(0.0)
-        } else if finished {
-            animation.progress = 1.0
-            shape.form = morphingAnimation.getVFunc()(1.0)
-        }
-
-        renderer.freeLayer()
-
-        if  !animation.cycled &&
-                !animation.manualStop {
-            animation.completion?()
-        }
-
-        completion()
+    generatedAnimation.completion = { _ in
+        // remove for now, cause we don't need animation right now.
     }
 
     layer.path = fromLocus.toCGPath()
