@@ -84,56 +84,56 @@ class AnimationProducer {
             break
         }
 
-        guard let macawView = animation.nodeRenderer?.view else {
-            storedAnimations[node] = animation
-            return
-        }
-
-        guard let layer = macawView.mLayer else {
-            return
-        }
+//        guard let macawView = animation.nodeRenderer?.view else {
+//            storedAnimations[node] = animation
+//            return
+//        }
+//
+//        guard let layer = macawView.mLayer else {
+//            return
+//        }
 
         // swiftlint:disable superfluous_disable_command switch_case_alignment
-        switch animation.type {
-        case .affineTransformation:
-            addTransformAnimation(animation, context, sceneLayer: layer, completion: {
-                if let next = animation.next {
-                    self.play(next, context)
-                }
-            })
-        case .opacity:
-            addOpacityAnimation(animation, context, sceneLayer: layer, completion: {
-                if let next = animation.next {
-                    self.play(next, context)
-                }
-            })
-        case .contents:
-            addContentsAnimation(animation, context) {
-                if let next = animation.next {
-                    self.play(next, context)
-                }
-            }
-        case .morphing:
-            addMorphingAnimation(animation, context, sceneLayer: layer) {
-                if let next = animation.next {
-                    self.play(next, context)
-                }
-            }
-        case .shape:
-            addShapeAnimation(animation, context, sceneLayer: layer) {
-                if let next = animation.next {
-                    self.play(next, context)
-                }
-            }
-        case .path:
-            addPathAnimation(animation, context, sceneLayer: layer) {
-                if let next = animation.next {
-                    self.play(next, context)
-                }
-            }
-        default:
-            break
-        }
+//        switch animation.type {
+//        case .affineTransformation:
+//            addTransformAnimation(animation, context, sceneLayer: layer, completion: {
+//                if let next = animation.next {
+//                    self.play(next, context)
+//                }
+//            })
+//        case .opacity:
+//            addOpacityAnimation(animation, context, sceneLayer: layer, completion: {
+//                if let next = animation.next {
+//                    self.play(next, context)
+//                }
+//            })
+//        case .contents:
+//            addContentsAnimation(animation, context) {
+//                if let next = animation.next {
+//                    self.play(next, context)
+//                }
+//            }
+//        case .morphing:
+//            addMorphingAnimation(animation, context, sceneLayer: layer) {
+//                if let next = animation.next {
+//                    self.play(next, context)
+//                }
+//            }
+//        case .shape:
+//            addShapeAnimation(animation, context, sceneLayer: layer) {
+//                if let next = animation.next {
+//                    self.play(next, context)
+//                }
+//            }
+//        case .path:
+//            addPathAnimation(animation, context, sceneLayer: layer) {
+//                if let next = animation.next {
+//                    self.play(next, context)
+//                }
+//            }
+//        default:
+//            break
+//        }
         // swiftlint:enable superfluous_disable_command switch_case_alignment
     }
 
@@ -335,11 +335,11 @@ class AnimationContext {
     var rootTransform: Transform?
 
     func getLayoutTransform(_ renderer: NodeRenderer?) -> Transform {
-        if rootTransform == nil {
-            if let view = renderer?.view {
-                rootTransform = view.place
-            }
-        }
+//        if rootTransform == nil {
+//            if let view = renderer?.view {
+//                rootTransform = view.place
+//            }
+//        }
         return rootTransform ?? Transform.identity
     }
 

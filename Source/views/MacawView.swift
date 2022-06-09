@@ -75,7 +75,7 @@ open class MacawView: MView, MGestureRecognizerDelegate {
         super.init(coder: aDecoder)
 
         self.node = node
-        self.renderer = RenderUtils.createNodeRenderer(node, view: drawingView)
+        self.renderer = RenderUtils.createNodeRenderer(node, size: drawingView.bounds.size)
 
         zoom.initialize(onChange: { [weak self] transform in
             self?.onZoomChange(t: transform)
@@ -87,7 +87,7 @@ open class MacawView: MView, MGestureRecognizerDelegate {
         self.init(frame: frame)
 
         self.node = node
-        self.renderer = RenderUtils.createNodeRenderer(node, view: drawingView)
+        self.renderer = RenderUtils.createNodeRenderer(node, size: drawingView.bounds.size)
     }
 
     public override init(frame: CGRect) {
@@ -211,7 +211,7 @@ internal class DrawingView: MView {
         didSet {
             layoutHelper.nodeChanged()
             self.renderer?.dispose()
-            self.renderer = RenderUtils.createNodeRenderer(node, view: self)
+            self.renderer = RenderUtils.createNodeRenderer(node, size: self.bounds.size)
 
             if let _ = superview {
                 animationProducer.addStoredAnimations(node, self)
@@ -684,8 +684,8 @@ class LayoutHelper {
         let node = nodeRenderer.node
         var rect = node.bounds
         if let canvas = node as? SVGCanvas {
-            if let view = nodeRenderer.view {
-                rect = canvas.layout(size: view.bounds.size.toMacaw()).rect()
+            if let size = nodeRenderer.size {
+                rect = canvas.layout(size: size.toMacaw()).rect()
             } else {
                 rect = BoundsUtils.getNodesBounds(canvas.contents)
             }
@@ -787,4 +787,48 @@ class RootPlaceManager {
         return places[0].concat(with: places[1])
     }
 
+}
+
+public class ImageGenerator {
+    
+    private let size: CGSize
+    private let node: Node
+    private let placeManager = RootPlaceManager()
+    private let layoutHelper = LayoutHelper()
+    
+    var place: Transform {
+        return placeManager.placeVar.value
+    }
+    
+    public init(size: CGSize, node: Node) {
+        self.size = size
+        self.node = node
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func generate() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        guard let ctx = UIGraphicsGetCurrentContext() else { return nil }
+        
+        ctx.setFlatness(1)
+        ctx.interpolationQuality = .default
+
+        let renderer = RenderUtils.createNodeRenderer(node, size: size)
+
+        // TODO: actually we should track all changes
+        placeManager.setLayout(place: layoutHelper.getTransform(renderer, .none, size.toMacaw()))
+        ctx.concatenate(place.toCG())
+
+        renderer.calculateZPositionRecursively()
+        renderer.render(in: ctx, force: false, opacity: node.opacity)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return image
+    }
+    
 }

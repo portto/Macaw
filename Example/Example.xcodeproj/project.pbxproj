@@ -20,6 +20,9 @@
 		5B5B393B2481094200753058 /* PathAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B393A2481094200753058 /* PathAnimationView.swift */; };
 		5BAE3CB120C54E3D006BEF51 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAE3CB020C54E3D006BEF51 /* FiltersViewController.swift */; };
 		66AE19DB1CC8CB3C00B78B5E /* tiger.svg in Resources */ = {isa = PBXBuildFile; fileRef = 66AE19DA1CC8CB3C00B78B5E /* tiger.svg */; };
+		6D1267C22850BEFE00DEC548 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1267C12850BEFE00DEC548 /* SVGImageView.swift */; };
+		6D1267C528519F6200DEC548 /* SVGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1267C428519F6200DEC548 /* SVGViewController.swift */; };
+		6D1267C72851BFF900DEC548 /* flovatar.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6D1267C62851BFF900DEC548 /* flovatar.svg */; };
 		B02E75F11C16104900D1971D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02E75F01C16104900D1971D /* AppDelegate.swift */; };
 		B02E75F61C16104900D1971D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B02E75F41C16104900D1971D /* Main.storyboard */; };
 		B02E75F81C16104900D1971D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B02E75F71C16104900D1971D /* Assets.xcassets */; };
@@ -56,6 +59,9 @@
 		5B5B393A2481094200753058 /* PathAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAnimationView.swift; sourceTree = "<group>"; };
 		5BAE3CB020C54E3D006BEF51 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		66AE19DA1CC8CB3C00B78B5E /* tiger.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = tiger.svg; path = Example/Assets/SVG/tiger.svg; sourceTree = "<group>"; };
+		6D1267C12850BEFE00DEC548 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
+		6D1267C428519F6200DEC548 /* SVGViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGViewController.swift; sourceTree = "<group>"; };
+		6D1267C62851BFF900DEC548 /* flovatar.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = flovatar.svg; sourceTree = "<group>"; };
 		B02E75ED1C16104900D1971D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B02E75F01C16104900D1971D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B02E75F51C16104900D1971D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -107,6 +113,7 @@
 		574EC4271CB7DE7F0063F317 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				6D1267C328519F5700DEC548 /* SVG */,
 				5B5B39392481092A00753058 /* PathAnimation */,
 				49265C7E2227B1B200923A66 /* Text */,
 				574EC4331CB7DE7F0063F317 /* Shapes */,
@@ -118,6 +125,7 @@
 				5BAE3CAF20C54DA5006BEF51 /* Filters */,
 				5BE9F15D226EEAE500030967 /* AnimationsHierarchy */,
 				574EC4401CB7E2440063F317 /* MenuViewController.swift */,
+				6D1267C12850BEFE00DEC548 /* SVGImageView.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -208,8 +216,17 @@
 			isa = PBXGroup;
 			children = (
 				66AE19DA1CC8CB3C00B78B5E /* tiger.svg */,
+				6D1267C62851BFF900DEC548 /* flovatar.svg */,
 			);
 			name = SVG;
+			sourceTree = "<group>";
+		};
+		6D1267C328519F5700DEC548 /* SVG */ = {
+			isa = PBXGroup;
+			children = (
+				6D1267C428519F6200DEC548 /* SVGViewController.swift */,
+			);
+			path = SVG;
 			sourceTree = "<group>";
 		};
 		B02E75E41C16104900D1971D = {
@@ -313,6 +330,7 @@
 				B02E75F81C16104900D1971D /* Assets.xcassets in Resources */,
 				66AE19DB1CC8CB3C00B78B5E /* tiger.svg in Resources */,
 				B02E75F61C16104900D1971D /* Main.storyboard in Resources */,
+				6D1267C72851BFF900DEC548 /* flovatar.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,10 +398,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				574EC4441CBB60AF0063F317 /* AnimationsExampleController.swift in Sources */,
+				6D1267C528519F6200DEC548 /* SVGViewController.swift in Sources */,
 				5747F9BD1E38B683004E338F /* MorphingView.swift in Sources */,
 				575129B61CBD14AF00BD3C2E /* AnimationsView.swift in Sources */,
 				5B195EAD2276D5C40008AE8B /* AnimationsHierarchyViewController.swift in Sources */,
 				58E4D50C1D841C6E00EC8815 /* TransformExampleView.swift in Sources */,
+				6D1267C22850BEFE00DEC548 /* SVGImageView.swift in Sources */,
 				B02E75F11C16104900D1971D /* AppDelegate.swift in Sources */,
 				5B5B393B2481094200753058 /* PathAnimationView.swift in Sources */,
 				5BAE3CB120C54E3D006BEF51 /* FiltersViewController.swift in Sources */,

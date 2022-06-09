@@ -22,16 +22,15 @@ class CachedLayer {
 
 class NodeRenderer {
 
-    weak var view: DrawingView?
-    var sceneLayer: CALayer? {
-        return view?.mLayer
-    }
+//    weak var view: DrawingView?
+    var sceneLayer: CALayer? = nil
+    let size: CGSize?
     var layer: CachedLayer?
     var zPosition: Int = 0
 
     private(set) weak var parentRenderer: GroupRenderer?
 
-    fileprivate let onNodeChange: () -> Void
+//    fileprivate let onNodeChange: () -> Void
     fileprivate let disposables = GroupDisposable()
     fileprivate var active = false
 
@@ -53,37 +52,37 @@ class NodeRenderer {
         cachedAbsPlace = nil
     }
 
-    public func place(in relativity: Relativity = .parent) -> Transform {
-        switch relativity {
-        case .parent:
-            return node.place
-        case .scene:
-            return absPlace
-        case .view:
-            if let viewPlace = view?.place {
-                return viewPlace.concat(with: absPlace)
-            }
-            return absPlace
-        }
-    }
+//    public func place(in relativity: Relativity = .parent) -> Transform {
+//        switch relativity {
+//        case .parent:
+//            return node.place
+//        case .scene:
+//            return absPlace
+//        case .view:
+//            if let viewPlace = view?.place {
+//                return viewPlace.concat(with: absPlace)
+//            }
+//            return absPlace
+//        }
+//    }
 
     open var node: Node {
         fatalError("Unsupported")
     }
 
-    init(node: Node, view: DrawingView?, parentRenderer: GroupRenderer? = nil) {
-        self.view = view
+    init(size: CGSize?, parentRenderer: GroupRenderer? = nil) {
+        self.size = size
         self.parentRenderer = parentRenderer
 
-        onNodeChange = { [weak view] in
-            if node.isAnimating() {
-                return
-            }
+//        onNodeChange = { [weak view] in
+//            if node.isAnimating() {
+//                return
+//            }
+//
+//            view?.setNeedsDisplay()
+//        }
 
-            view?.setNeedsDisplay()
-        }
-
-        addObservers()
+//        addObservers()
     }
 
     deinit {
@@ -91,22 +90,22 @@ class NodeRenderer {
     }
 
     func doAddObservers() {
-        observe(node.placeVar)
-        observe(node.opaqueVar)
-        observe(node.opacityVar)
-        observe(node.clipVar)
-        observe(node.effectVar)
-
-        node.animationObservers.append(self)
-
-        node.placeVar.onChange { [weak self] _ in
-            self?.freeCachedAbsPlace()
-        }
+//        observe(node.placeVar)
+//        observe(node.opaqueVar)
+//        observe(node.opacityVar)
+//        observe(node.clipVar)
+//        observe(node.effectVar)
+//
+//        node.animationObservers.append(self)
+//
+//        node.placeVar.onChange { [weak self] _ in
+//            self?.freeCachedAbsPlace()
+//        }
     }
 
     func observe<E>(_ v: Variable<E>) {
         let disposable = v.onChange { [weak self] _ in
-            self?.onNodeChange()
+//            self?.onNodeChange()
         }
 
         addDisposable(disposable)
@@ -176,14 +175,14 @@ class NodeRenderer {
                             force: Bool = true,
                             opacity: Double = 1.0,
                             coloringMode: ColoringMode = .rgb) {
-        if isAnimating() {
-            self.removeObservers()
-            if !force {
-                return
-            }
-        } else {
-            self.addObservers()
-        }
+//        if isAnimating() {
+//            self.removeObservers()
+//            if !force {
+//                return
+//            }
+//        } else {
+//            self.addObservers()
+//        }
         doRender(in: context, force: force, opacity: opacity, coloringMode: coloringMode)
     }
 
@@ -341,7 +340,7 @@ class NodeRenderer {
         guard let mask = node.mask, let image = renderToImage(bounds: bounds) else {
             return .none
         }
-        let nodeRenderer = RenderUtils.createNodeRenderer(mask, view: .none)
+        let nodeRenderer = RenderUtils.createNodeRenderer(mask, size: .none)
         guard let maskImage = nodeRenderer.renderToImage(bounds: bounds, coloringMode: .greyscale) else {
             return .none
         }
@@ -370,17 +369,17 @@ class NodeRenderer {
     }
 
     private func addObservers() {
-        if !active {
-            active = true
-            doAddObservers()
-        }
+//        if !active {
+//            active = true
+//            doAddObservers()
+//        }
     }
 
     fileprivate func removeObservers() {
-        if active {
-            active = false
-            disposables.dispose()
-        }
+//        if active {
+//            active = false
+//            disposables.dispose()
+//        }
     }
 
     func getAllChildrenRecursive() -> [NodeRenderer] {

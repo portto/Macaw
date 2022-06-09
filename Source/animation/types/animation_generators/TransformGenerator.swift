@@ -56,7 +56,7 @@ func addTransformAnimation(_ animation: BasicAnimation, _ context: AnimationCont
 
         CATransaction.begin()
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-        renderer.layer?.animationLayer.transform = CATransform3DMakeAffineTransform(node.place.toCG())
+//        renderer.layer?.animationLayer.transform = CATransform3DMakeAffineTransform(node.place.toCG())
         CATransaction.commit()
 
         if !animation.paused {

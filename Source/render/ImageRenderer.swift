@@ -17,9 +17,9 @@ class ImageRenderer: NodeRenderer {
         return image
     }
 
-    init(image: Image, view: DrawingView?, parentRenderer: GroupRenderer? = nil) {
+    init(image: Image, size: CGSize?, parentRenderer: GroupRenderer? = nil) {
         self.image = image
-        super.init(node: image, view: view, parentRenderer: parentRenderer)
+        super.init(size: size, parentRenderer: parentRenderer)
     }
 
     deinit {

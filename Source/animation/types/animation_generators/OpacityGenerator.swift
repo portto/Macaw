@@ -49,7 +49,7 @@ func addOpacityAnimation(_ animation: BasicAnimation, _ context: AnimationContex
 
         CATransaction.begin()
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-        renderer.layer?.animationLayer.opacity = Float(node.opacity)
+//        renderer.layer?.animationLayer.opacity = Float(node.opacity)
         CATransaction.commit()
 
         if !animation.paused {

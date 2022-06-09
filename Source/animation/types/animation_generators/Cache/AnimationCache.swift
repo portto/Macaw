@@ -11,11 +11,11 @@ class AnimationUtils {
     class func layerForNodeRenderer(_ renderer: NodeRenderer, animation: Animation, customBounds: Rect? = .none, shouldRenderContent: Bool = true) -> ShapeLayer {
 
         let node = renderer.node
-        if let cachedLayer = renderer.layer {
-            cachedLayer.rootLayer.transform = CATransform3DMakeAffineTransform(uncachedParentsPlace(renderer).toCG())
-            cachedLayer.animationLayer.opacity = Float(node.opacity)
-            return cachedLayer.animationLayer
-        }
+//        if let cachedLayer = renderer.layer {
+//            cachedLayer.rootLayer.transform = CATransform3DMakeAffineTransform(uncachedParentsPlace(renderer).toCG())
+//            cachedLayer.animationLayer.opacity = Float(node.opacity)
+//            return cachedLayer.animationLayer
+//        }
 
         // 'sublayer' is for actual CAAnimations, and 'layer' is for manual transforming and hierarchy changes
         let sublayer = ShapeLayer()
@@ -62,40 +62,40 @@ class AnimationUtils {
         sublayer.setNeedsDisplay()
 
         // find first parent with cached layer
-        var parent: NodeRenderer? = renderer.parentRenderer
-        var parentCachedLayer: CALayer? = renderer.sceneLayer
-        while parent != nil {
-            if let parent = parent {
-                if let cached = parent.layer {
-                    parentCachedLayer = cached.animationLayer
-                    break
-                }
-            }
-            parent = parent?.parentRenderer
-        }
-        layer.transform = CATransform3DMakeAffineTransform(uncachedParentsPlace(renderer).toCG())
-        sublayer.transform = CATransform3DMakeAffineTransform(node.place.toCG())
-        parentCachedLayer?.addSublayer(layer)
-        parentCachedLayer?.setNeedsDisplay()
-
-        renderer.layer = CachedLayer(rootLayer: layer, animationLayer: sublayer)
+//        var parent: NodeRenderer? = renderer.parentRenderer
+//        var parentCachedLayer: CALayer? = renderer.sceneLayer
+//        while parent != nil {
+//            if let parent = parent {
+//                if let cached = parent.layer {
+//                    parentCachedLayer = cached.animationLayer
+//                    break
+//                }
+//            }
+//            parent = parent?.parentRenderer
+//        }
+//        layer.transform = CATransform3DMakeAffineTransform(uncachedParentsPlace(renderer).toCG())
+//        sublayer.transform = CATransform3DMakeAffineTransform(node.place.toCG())
+//        parentCachedLayer?.addSublayer(layer)
+//        parentCachedLayer?.setNeedsDisplay()
+//
+//        renderer.layer = CachedLayer(rootLayer: layer, animationLayer: sublayer)
 
         // move children to new layer
-        for child in renderer.getAllChildrenRecursive() {
-            if let cachedChildLayer = child.layer, let parentCachedLayer = parentCachedLayer {
-                parentCachedLayer.sublayers?.forEach { childLayer in
-                    if childLayer === cachedChildLayer.rootLayer {
-
-                        childLayer.removeFromSuperlayer()
-                        childLayer.transform = CATransform3DMakeAffineTransform(uncachedParentsPlace(child).toCG())
-                        sublayer.addSublayer(childLayer)
-                        sublayer.setNeedsDisplay()
-                    }
-                }
-            }
-        }
-
-        renderer.sceneLayer?.setNeedsDisplay()
+//        for child in renderer.getAllChildrenRecursive() {
+//            if let cachedChildLayer = child.layer, let parentCachedLayer = parentCachedLayer {
+//                parentCachedLayer.sublayers?.forEach { childLayer in
+//                    if childLayer === cachedChildLayer.rootLayer {
+//
+//                        childLayer.removeFromSuperlayer()
+//                        childLayer.transform = CATransform3DMakeAffineTransform(uncachedParentsPlace(child).toCG())
+//                        sublayer.addSublayer(childLayer)
+//                        sublayer.setNeedsDisplay()
+//                    }
+//                }
+//            }
+//        }
+//
+//        renderer.sceneLayer?.setNeedsDisplay()
 
         return sublayer
     }
@@ -150,9 +150,9 @@ class AnimationUtils {
             }
             parent = parent?.parentRenderer
         }
-        if let viewPlace = renderer.view?.place {
-            uncachedParentsPlace = uncachedParentsPlace.concat(with: viewPlace)
-        }
+//        if let viewPlace = renderer.view?.place {
+//            uncachedParentsPlace = uncachedParentsPlace.concat(with: viewPlace)
+//        }
         return uncachedParentsPlace
     }
 }
@@ -171,47 +171,48 @@ extension Node {
 extension NodeRenderer {
 
     func isAnimating() -> Bool {
-        return layer != nil
+        return false
+//        return layer != nil
     }
 
     func freeLayer() {
 
-        let nodeRenderer = self
-        guard let layer = nodeRenderer.layer, !node.needsLayer() else {
-            return
-        }
-        nodeRenderer.layer = nil
+//        let nodeRenderer = self
+//        guard let layer = nodeRenderer.layer, !node.needsLayer() else {
+//            return
+//        }
+//        nodeRenderer.layer = nil
 
         // find first parent with cached layer
-        var parent: NodeRenderer? = nodeRenderer.parentRenderer
-        var parentCachedLayer: CALayer? = nodeRenderer.sceneLayer
-        while parent != nil {
-            if let parent = parent, let cached = parent.layer {
-                parentCachedLayer = cached.animationLayer
-                break
-            }
-            parent = parent?.parentRenderer
-        }
+//        var parent: NodeRenderer? = nodeRenderer.parentRenderer
+//        var parentCachedLayer: CALayer? = nodeRenderer.sceneLayer
+//        while parent != nil {
+//            if let parent = parent, let cached = parent.layer {
+//                parentCachedLayer = cached.animationLayer
+//                break
+//            }
+//            parent = parent?.parentRenderer
+//        }
 
         // move children to closest parent layer
-        for child in nodeRenderer.getAllChildrenRecursive() {
-            if let cachedChildLayer = child.layer, let parentCachedLayer = parentCachedLayer {
-                layer.animationLayer.sublayers?.forEach { childLayer in
-                    if childLayer === cachedChildLayer.rootLayer {
-                        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-                        childLayer.removeFromSuperlayer()
-                        childLayer.transform = CATransform3DMakeAffineTransform(AnimationUtils.uncachedParentsPlace(child).toCG())
-                        parentCachedLayer.addSublayer(childLayer)
-                        childLayer.setNeedsDisplay()
-                        CATransaction.commit()
-                    }
-                }
-            }
-        }
-
-        layer.animationLayer.removeFromSuperlayer()
-        layer.rootLayer.removeFromSuperlayer()
-        parentCachedLayer?.setNeedsDisplay()
-        sceneLayer?.setNeedsDisplay()
+//        for child in nodeRenderer.getAllChildrenRecursive() {
+//            if let cachedChildLayer = child.layer, let parentCachedLayer = parentCachedLayer {
+//                layer.animationLayer.sublayers?.forEach { childLayer in
+//                    if childLayer === cachedChildLayer.rootLayer {
+//                        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+//                        childLayer.removeFromSuperlayer()
+//                        childLayer.transform = CATransform3DMakeAffineTransform(AnimationUtils.uncachedParentsPlace(child).toCG())
+//                        parentCachedLayer.addSublayer(childLayer)
+//                        childLayer.setNeedsDisplay()
+//                        CATransaction.commit()
+//                    }
+//                }
+//            }
+//        }
+//
+//        layer.animationLayer.removeFromSuperlayer()
+//        layer.rootLayer.removeFromSuperlayer()
+//        parentCachedLayer?.setNeedsDisplay()
+//        sceneLayer?.setNeedsDisplay()
     }
 }

@@ -16,15 +16,15 @@ class RenderUtils {
         return p
     }
 
-    class func createNodeRenderer(_ node: Node, view: DrawingView?, parentRenderer: GroupRenderer? = nil) -> NodeRenderer {
+    class func createNodeRenderer(_ node: Node, size: CGSize?, parentRenderer: GroupRenderer? = nil) -> NodeRenderer {
         if let group = node as? Group {
-            return GroupRenderer(group: group, view: view, parentRenderer: parentRenderer)
+            return GroupRenderer(group: group, size: size, parentRenderer: parentRenderer)
         } else if let shape = node as? Shape {
-            return ShapeRenderer(shape: shape, view: view, parentRenderer: parentRenderer)
+            return ShapeRenderer(shape: shape, size: size, parentRenderer: parentRenderer)
         } else if let text = node as? Text {
-            return TextRenderer(text: text, view: view, parentRenderer: parentRenderer)
+            return TextRenderer(text: text, size: size, parentRenderer: parentRenderer)
         } else if let image = node as? Image {
-            return ImageRenderer(image: image, view: view, parentRenderer: parentRenderer)
+            return ImageRenderer(image: image, size: size, parentRenderer: parentRenderer)
         }
         fatalError("Unsupported node: \(node)")
     }

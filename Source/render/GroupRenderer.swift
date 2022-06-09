@@ -13,9 +13,9 @@ class GroupRenderer: NodeRenderer {
         return group
     }
 
-    init(group: Group, view: DrawingView?, parentRenderer: GroupRenderer? = nil) {
+    init(group: Group, size: CGSize?, parentRenderer: GroupRenderer? = nil) {
         self.group = group
-        super.init(node: group, view: view, parentRenderer: parentRenderer)
+        super.init(size: size, parentRenderer: parentRenderer)
         updateRenderers()
     }
 
@@ -69,7 +69,7 @@ class GroupRenderer: NodeRenderer {
         renderers.removeAll()
 
         renderers = group.contents.compactMap { child -> NodeRenderer? in
-            RenderUtils.createNodeRenderer(child, view: view, parentRenderer: self)
+            RenderUtils.createNodeRenderer(child, size: size, parentRenderer: self)
         }
 
         var parent: NodeRenderer = self

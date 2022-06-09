@@ -13,9 +13,9 @@ class TextRenderer: NodeRenderer {
         return text
     }
 
-    init(text: Text, view: DrawingView?, parentRenderer: GroupRenderer? = nil) {
+    init(text: Text, size: CGSize?, parentRenderer: GroupRenderer? = nil) {
         self.text = text
-        super.init(node: text, view: view, parentRenderer: parentRenderer)
+        super.init(size: size, parentRenderer: parentRenderer)
     }
 
     deinit {
