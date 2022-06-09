@@ -26,7 +26,7 @@ class SVGImageView: UIView {
     }
     
     private func setupViews() {
-        let imageGenerator = ImageGenerator(size: CGSize(width: 1000, height: 2000), node: node)
+        let imageGenerator = SVGImageGenerator(size: CGSize(width: 1000, height: 2000), node: node)
         if let image = imageGenerator.generate() {
             let imageView = UIImageView(image: image)
             imageView.backgroundColor = .gray

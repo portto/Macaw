@@ -1,5 +1,5 @@
 //
-//  ImageGenerator.swift
+//  SVGImageGenerator.swift
 //  Macaw
 //
 //  Created by Andrew Wang on 2022/6/9.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ImageGenerator {
+public class SVGImageGenerator {
     
     private let size: CGSize
     private let node: Node
@@ -21,6 +21,16 @@ public class ImageGenerator {
     public init(size: CGSize, node: Node) {
         self.size = size
         self.node = node
+    }
+    
+    public init(size: CGSize, svgString: String) {
+        self.size = size
+        do {
+            node = try SVGParser.parse(text: svgString)
+        } catch {
+            assertionFailure("svgString is not valid.")
+            node = Group()
+        }
     }
     
     required init?(coder: NSCoder) {
