@@ -93,7 +93,11 @@ class ShapeRenderer: NodeRenderer {
             if stroke.fill is Gradient && !(fill is Gradient) {
                 ctx!.drawPath(using: fillRule == .nonzero ? .fill : .eoFill)
             }
-            drawWithStroke(stroke, ctx: ctx, opacity: opacity, shouldStrokePath: shouldStrokePath, path: path, mode: fillRule == .nonzero ? .fillStroke : .eoFillStroke)
+            var mode: CGPathDrawingMode = fillRule == .nonzero ? .fillStroke : .eoFillStroke
+            if fill == Color.clear.with(a: 1) {
+                mode = .stroke
+            }
+            drawWithStroke(stroke, ctx: ctx, opacity: opacity, shouldStrokePath: shouldStrokePath, path: path, mode: mode)
             return
         }
 
