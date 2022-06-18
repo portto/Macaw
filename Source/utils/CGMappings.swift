@@ -140,7 +140,9 @@ public extension Node {
         let rect = size.rect()
 
         MGraphicsBeginImageContextWithOptions(size.toCG(), false, scale)
-        let ctx = MGraphicsGetCurrentContext()!
+        guard let ctx = MGraphicsGetCurrentContext() else {
+            return .init()
+        }
         ctx.clear(rect.toCG())
 
         let transform = LayoutHelper.calcTransform(self, layout, size)
